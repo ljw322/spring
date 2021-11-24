@@ -3,26 +3,28 @@ package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MemberService {
     //회원 서비스를 만드려면, 회원 레파지토리가 존재해야 한다
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
+
+    @Autowired
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     /**
      * 회원가입
      */
     public Long join(Member member){
 
-//        같은 이름 중복 회원 x
-//        Optional<Member> result = memberRepository.findByName(member.getName());
-//         과거에는 if null 이렇게 썼다면, 요즈음은 Optional로 감싸서 작성
-//         Member member1 = result.get();
-//         result.orElseGet() null이 아니면 꺼내!
-//
-//         refactoring: ctrl+shift+alt+T -> extract method
         validateDuplicateMember(member); // 중복회원 검증
         memberRepository.save(member);
         return member.getId();
@@ -31,11 +33,7 @@ public class MemberService {
     private void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
                 .ifPresent(m -> {
-            try {
-                throw new IllegalAccessException("이미 존재하는 회원입니다.");
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+                throw new IllegalStateException("이미 존재하는 회원입니다.");
         });
     }
 
