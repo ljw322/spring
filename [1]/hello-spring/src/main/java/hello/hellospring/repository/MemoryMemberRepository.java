@@ -13,7 +13,6 @@ public class MemoryMemberRepository implements MemberRepository{
     public Member save(Member member) {
         member.setId(++sequence);
         store.put(member.getId(), member);
-
         return member;
     }
 
@@ -35,6 +34,7 @@ public class MemoryMemberRepository implements MemberRepository{
         return new ArrayList<>(store.values());
     }
 
+    // test용 Clear
     public void clearStore(){
         store.clear();
     }

@@ -14,12 +14,6 @@ class MemoryMemberRepositoryTest {
 
     MemoryMemberRepository repository = new MemoryMemberRepository();
 
-    // class가 끝나고 자동적으로 호출이 됨
-    @AfterEach
-    public void afterEach(){
-        repository.clearStore();
-    }
-
     /*
     - @Test 장점: 클래스별로 모두 다 돌려볼 수 있다
     - class별로 테스트 될 때, 순서는 무작위이다
@@ -27,6 +21,13 @@ class MemoryMemberRepositoryTest {
     - TestCode(현 파일)을 먼저 만들고 개발하는 방식을 TDD라고 한다
 
      */
+
+    // class가 끝나고 자동적 호출
+    @AfterEach
+    public void afterEach(){
+        repository.clearStore();
+    }
+
     @Test
     public void save(){
         Member member = new Member();
