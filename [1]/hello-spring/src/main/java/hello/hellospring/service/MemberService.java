@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+//@Service
 public class MemberService {
     //회원 서비스를 만드려면, 회원 레파지토리가 존재해야 한다
 //    private final MemberRepository memberRepository = new MemoryMemberRepository();
